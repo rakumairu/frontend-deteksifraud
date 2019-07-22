@@ -92,7 +92,7 @@ class Recap extends React.Component {
   }
 
   componentWillUnmount() {
-    // this.abortController.abort()
+    this.abortController.abort()
   }
 
   changeStartDate = event => {

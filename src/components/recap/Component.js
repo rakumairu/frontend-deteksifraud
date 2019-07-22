@@ -9,6 +9,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Tabel from '../elements/tabel/Tabel'
 import DatePick from '../elements/datepicker/DatePick'
 import LineChart from '../elements/linechart/LineChart'
+import LineChartRC from '../elements/linechart/LineChartRC'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -72,7 +73,7 @@ const Component = props => {
         container
         spacing={3}
       >
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <Tabel
             data={ props.data }
             column={ props.column }
@@ -80,11 +81,16 @@ const Component = props => {
             title={ 'Fraud Recap' }
           />
         </Grid>
-        <Grid item xs={3}>
-          <LineChart
+      </Grid>
+      <Grid
+        container
+        spacing={3}
+      >
+        <Grid item xs={12}>
+          <LineChartRC
+            data={ props.data }
             isLoading={ props.isLoading }
-            dataPoints={ props.data }
-            title={ 'Fraud Line' }
+            title={ 'Fraud Line Chart' }
           />
         </Grid>
       </Grid>

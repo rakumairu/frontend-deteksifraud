@@ -8,7 +8,6 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import Tabel from '../elements/tabel/Tabel'
 import DatePick from '../elements/datepicker/DatePick'
-import LineChart from '../elements/linechart/LineChart'
 import LineChartRC from '../elements/linechart/LineChartRC'
 
 const useStyles = makeStyles(theme => ({

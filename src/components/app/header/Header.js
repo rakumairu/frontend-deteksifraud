@@ -7,7 +7,6 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import Home from '@material-ui/icons/Home'
 import Assessment from '@material-ui/icons/Assessment'
 import Dashboard from '@material-ui/icons/Dashboard'
 

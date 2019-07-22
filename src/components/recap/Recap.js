@@ -5,6 +5,7 @@ import Component from './Component'
 const address = 'http://localhost:8000/api/dummy_labelled/'
 
 class Recap extends React.Component {
+  abortController = new AbortController()
 
   constructor() {
     super()
@@ -28,7 +29,7 @@ class Recap extends React.Component {
 
     this._isMounted = true
 
-    fetch(address)
+    fetch(address, { signal: this.abortController.signal })
     // Check if reponse is ok
     .then(response => {
       if (response.ok) {
@@ -42,8 +43,13 @@ class Recap extends React.Component {
       if (response !== this.state.data) {
         // Create header configuration for table columns
         const originalHeader = Object.keys(response[0])
-        const classHeader = localStorage.getItem('classColumn')
-        const timestampHeader = localStorage.getItem('timestampColumn')
+        const classHeader = 'status'
+        const timestampHeader = 'timestamp'
+        /*
+          Disabled features
+        */
+        // const classHeader = localStorage.getItem('classColumn')
+        // const timestampHeader = localStorage.getItem('timestampColumn')
         
         const column = originalHeader.map((head) => {
           if (head === timestampHeader) {
@@ -81,9 +87,12 @@ class Recap extends React.Component {
       }
     })
     .catch(e => {
-      console.log('Something went wrong')
       console.log(e)
     })
+  }
+
+  componentWillUnmount() {
+    // this.abortController.abort()
   }
 
   changeStartDate = event => {

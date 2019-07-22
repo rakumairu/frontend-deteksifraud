@@ -23,7 +23,6 @@ class Dashboard extends React.Component {
       snackMessage: '',
       snackVariant: ''
     }
-    // this.ws = new WebSocket('ws://' + server)
     this.rws = new ReconnectingWebSocket('ws://' + server)
   }
 
@@ -56,9 +55,6 @@ class Dashboard extends React.Component {
   }
 
   handleMessage = message => {
-    let classColumn = localStorage.getItem('classColumn')
-    let timestampColumn = localStorage.getItem('timsetampColumn') 
-
     let data = JSON.parse(message.data)
 
     let oldData = this.state.data
@@ -68,9 +64,13 @@ class Dashboard extends React.Component {
     allData.push(data)
     
     const originalHeader = Object.keys(data)
-    // const lastHeader = originalHeader[originalHeader.length - 2]
-    const classHeader = localStorage.getItem('classColumn')
-    const timestampHeader = localStorage.getItem('timestampColumn')
+    const classHeader = 'status'
+    const timestampHeader = 'timestamp'
+    /*
+      Disabled features
+    */
+    // const classHeader = localStorage.getItem('classColumn')
+    // const timestampHeader = localStorage.getItem('timestampColumn')
     let column = []
     if (this.state.column === null) {
       column = originalHeader.map((head) => {
@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
       normalPercentage: normalPercentage.toFixed(2)
     }
 
-    if (localStorage.getItem('oldState') !== JSON.stringify(newState)) {
+    if (localStorage.getItem('oldState') !== JSON.stringify(newState) && this._isMounted) {
       if (data[classHeader] === 1) {
         this.setState({
           snackMessage: 'New Fraud Transaction Detected',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 // Import components
 import Dashboard from '../../dashboard/Dashboard'
@@ -10,11 +10,6 @@ class Routes extends React.Component {
   render() {
     return (
       <Switch>
-        {/* <Redirect
-          exact
-          from='/'
-          to='/dashboard'
-        /> */}
         <Route
           exact
           path='/'

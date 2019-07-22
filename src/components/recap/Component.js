@@ -87,11 +87,6 @@ const Component = props => {
         spacing={3}
       >
         <Grid item xs={12}>
-          {/* <LineChart
-            isLoading={ props.isLoading }
-            dataPoints={ props.data }
-            title={ 'Fraud Line' }
-          /> */}
           <LineChartRC
             data={ props.data }
             isLoading={ props.isLoading }

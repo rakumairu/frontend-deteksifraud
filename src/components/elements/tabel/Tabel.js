@@ -27,8 +27,9 @@ class Tabel extends React.Component {
           data={ this.props.data }
           options={{
             rowStyle: rowData => {
-              const l = Object.keys(rowData).length
-              const h = Object.keys(rowData)[l - 2]
+              // const l = Object.keys(rowData).length
+              // const h = Object.keys(rowData)[l - 2]
+              const h = localStorage.getItem('timestampColumn')
               return (rowData[h] === 0 ? normalStyles : anomalyStyles)
             }
           }}

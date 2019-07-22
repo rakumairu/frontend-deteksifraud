@@ -47,7 +47,6 @@ class LineChart extends Component {
 	)
 	
 	render() {
-		console.log(this.props.dataPoints)
 		let dataPoints = this.prepareDataPoints(this.props.dataPoints, 'timestamp')
 		console.log(dataPoints)
 		const options = {

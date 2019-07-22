@@ -34,7 +34,7 @@ class PieChart extends Component {
 				{ this.props.isLoading ?
 					<CircularIndeterminate minHeight={'416px'} /> :
 					<Paper>
-						<Chart options={ options }/>
+						<Chart options={ options } style={ { overflow: '-webkit-paged-x' } }/>
 					</Paper>
 				}
       </div>

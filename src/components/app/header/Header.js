@@ -3,22 +3,24 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 // Import Material-UI
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Home from '@material-ui/icons/Home';
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import Home from '@material-ui/icons/Home'
+import Assessment from '@material-ui/icons/Assessment'
+import Dashboard from '@material-ui/icons/Dashboard'
 
 const route = [
   {
     name: 'Dashboard',
     link: '/',
-    icon: <Home />
+    icon: <Dashboard />
   },
   {
     name: 'Recap',
     link: '/recap',
-    icon: <Home />
+    icon: <Assessment />
   }
 ]
 

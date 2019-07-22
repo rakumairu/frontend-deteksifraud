@@ -42,14 +42,16 @@ class Recap extends React.Component {
       if (response !== this.state.data) {
         // Create header configuration for table columns
         const originalHeader = Object.keys(response[0])
-        const classHeader = originalHeader[originalHeader.length - 2]
+        const classHeader = localStorage.getItem('classColumn')
+        const timestampHeader = localStorage.getItem('timestampColumn')
         
-        const column = originalHeader.map((head, index) => {
-          if (index === 0) {
+        const column = originalHeader.map((head) => {
+          if (head === timestampHeader) {
             return {
                 title: head,
                 field: head,
-                defaultSort: 'desc'
+                defaultSort: 'desc',
+                type: 'datetime'
               }
           } else {
             return {

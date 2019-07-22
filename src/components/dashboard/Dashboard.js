@@ -33,7 +33,6 @@ class Dashboard extends React.Component {
     this._isMounted = true
 
     let oldState = localStorage.getItem('oldState')
-    console.log(oldState)
     if (oldState !== null) {
       this.setState(JSON.parse(oldState))
     }
@@ -44,7 +43,6 @@ class Dashboard extends React.Component {
 
     this.rws.addEventListener('message', (data, flags) => {
       emitter.emit('new-message', data)
-      console.log('New Message', data)
     })
 
     emitter.on('new-message', this.handleMessage)
@@ -57,11 +55,11 @@ class Dashboard extends React.Component {
     })
   }
 
-  handleMessage = data => {
+  handleMessage = message => {
     let classColumn = localStorage.getItem('classColumn')
     let timestampColumn = localStorage.getItem('timsetampColumn') 
 
-    data = JSON.parse(data.data)
+    let data = JSON.parse(message.data)
 
     let oldData = this.state.data
     let allData = this.state.allData
@@ -70,15 +68,18 @@ class Dashboard extends React.Component {
     allData.push(data)
     
     const originalHeader = Object.keys(data)
-    const lastHeader = originalHeader[originalHeader.length - 2]
+    // const lastHeader = originalHeader[originalHeader.length - 2]
+    const classHeader = localStorage.getItem('classColumn')
+    const timestampHeader = localStorage.getItem('timestampColumn')
     let column = []
     if (this.state.column === null) {
-      column = originalHeader.map((head, index) => {
-        if (index === 0) {
+      column = originalHeader.map((head) => {
+        if (head === timestampHeader) {
           return {
               title: head,
               field: head,
-              defaultSort: 'desc'
+              defaultSort: 'desc',
+              type: 'datetime'
             }
         } else {
           return {
@@ -91,13 +92,13 @@ class Dashboard extends React.Component {
       column = this.state.column
     }
 
-    let amount = allData.filter(row => row[lastHeader] === 1).length
+    let amount = allData.filter(row => row[classHeader] === 1).length
     let percentage = (amount / allData.length) * 100
     let normalAmount = allData.length - amount
     let normalPercentage = (normalAmount / allData.length) * 100
 
     let newState = {
-      data: oldData.filter(row => row[lastHeader] === 1),
+      data: oldData.filter(row => row[classHeader] === 1),
       allData: allData,
       column: column,
       isLoading: false,
@@ -108,7 +109,7 @@ class Dashboard extends React.Component {
     }
 
     if (localStorage.getItem('oldState') !== JSON.stringify(newState)) {
-      if (oldData[oldData.length - 1][lastHeader] === 1) {
+      if (data[classHeader] === 1) {
         this.setState({
           snackMessage: 'New Fraud Transaction Detected',
           snackVariant: 'error'

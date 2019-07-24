@@ -1,23 +1,31 @@
+// Import React
 import React from 'react'
 
+// Import materialtable
 import MaterialTable from "material-table"
 
+// Import component
 import CircularIndeterminate from '../progress/CircularProgress'
 
-// Styles for anomaly
-const anomalyStyles = {
-  backgroundColor: '#f8d7da',
-  color: '#721c24'
-}
 
-// Styles for normal
-const normalStyles = {
-  backgroundColor: '#d1ecf1',
-  color: '#0c5460'
-}
+// Display tabel based on data
+const Tabel = props => {
 
-class Tabel extends React.Component {
-  prepareData = (data, timestamp) => {
+  // Styles for anomaly
+  const anomalyStyles = {
+    backgroundColor: '#f8d7da',
+    color: '#721c24'
+  }
+
+  // Styles for normal
+  const normalStyles = {
+    backgroundColor: '#d1ecf1',
+    color: '#0c5460'
+  }
+
+  // Prepare data to be used
+  const prepareData = (data, timestamp) => {
+    // Options to format datetime to string
     const options = {
       year: 'numeric',
       month: '2-digit',
@@ -27,10 +35,11 @@ class Tabel extends React.Component {
       second: '2-digit',
     }
 
+    // Generate modified data
 		let modified = data.map(row => {
 			let date = new Date(row[timestamp])
       const dateString = date.toLocaleString('en-GB', options)
-			
+
 			return {
 				...row,
 				timestamp: dateString
@@ -40,27 +49,25 @@ class Tabel extends React.Component {
     return modified
   }
 
-  render() {
-    let data = this.prepareData(this.props.data, 'timestamp')
-    return (
-      ( this.props.isLoading ?
-        <CircularIndeterminate minHeight={'416px'} /> :
-        <MaterialTable
-          title={ this.props.title }
-          columns={ this.props.column }
-          data={ data }
-          options={{
-            rowStyle: rowData => {
-              // const l = Object.keys(rowData).length
-              // const h = Object.keys(rowData)[l - 2]
-              const h = localStorage.getItem('timestampColumn')
-              return (rowData[h] === 0 ? normalStyles : anomalyStyles)
-            }
-          }}
-        />
-      )
+  // Initialize prepared data
+  let data = prepareData(props.data, 'timestamp')
+
+  return (
+    ( props.isLoading ?
+      <CircularIndeterminate minHeight={'416px'} /> :
+      <MaterialTable
+        title={ props.title }
+        columns={ props.column }
+        data={ data }
+        options={{
+          rowStyle: rowData => {
+            const h = localStorage.getItem('timestampColumn')
+            return (rowData[h] === 0 ? normalStyles : anomalyStyles)
+          }
+        }}
+      />
     )
-  }
+  )
 }
 
 export default Tabel

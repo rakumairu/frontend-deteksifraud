@@ -1,6 +1,8 @@
+// Import React and styles
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
+// Import material-ui components
 import Grid from '@material-ui/core/Grid';
 import Tabel from '../elements/tabel/Tabel'
 import Information from '../elements/information/Information'
@@ -8,18 +10,22 @@ import PieChart from '../elements/piechart/PieChart'
 import SnackNotification from '../elements/snackbars/SnackNotification'
 import LineChart from '../elements/linechart/LineChart'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}))
 
+// Serve as view for dashboard.js
 const Component = props => {
+
+  // Prepare the styles that will be used
+  const useStyles = makeStyles(theme => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  }))
+
   const classes = useStyles()
 
   return (

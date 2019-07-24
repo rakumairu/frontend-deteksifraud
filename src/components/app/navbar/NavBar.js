@@ -1,14 +1,17 @@
+// Import React and clsx
 import React from 'react'
 import clsx from 'clsx'
 
+// Import component from material-ui
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
-
 // import Settings from './Settings'
 
+
+// Show navbar
 const NavBar = (props) => {
   return (
     <AppBar

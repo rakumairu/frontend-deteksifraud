@@ -1,18 +1,24 @@
+// Import React
 import React from 'react'
 
+// Import material-ui components
 import { makeStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-const useStyles = makeStyles(theme => ({
-  progress: {
-    margin: theme.spacing(2),
-    textAlign: 'center'
-  },
-}))
 
+// Handle progress with circular progress
 function CircularIndeterminate(props) {
+
+  // Handle styling
+  const useStyles = makeStyles(theme => ({
+    progress: {
+      margin: theme.spacing(2),
+      textAlign: 'center'
+    },
+  }))
+
   const classes = useStyles()
 
   return (

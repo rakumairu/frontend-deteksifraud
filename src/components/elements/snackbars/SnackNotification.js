@@ -1,9 +1,15 @@
+// Import React
 import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 
-export default function SnackNotification(props) {
+
+// Display notification
+const SnackNotification = props => {
+
+  // Use snackbar
   const { enqueueSnackbar } = useSnackbar();
 
+  // Handle message
   useEffect(() => {
     if (props.message) {
       enqueueSnackbar(props.message, {variant: props.variant});
@@ -12,3 +18,5 @@ export default function SnackNotification(props) {
 
   return null
 }
+
+export default SnackNotification

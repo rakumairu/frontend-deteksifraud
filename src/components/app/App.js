@@ -16,25 +16,34 @@ import AppDrawer from './appdrawer/AppDrawer'
 
 import useStyles from './Styles'
 
+
+// Handle app overall
 const App = () => {
+  // Browser history for router
   const browserHistory = createBrowserHistory()
+  // Use styles and themes
   const classes = useStyles()
   const theme = useTheme()
+  // Hooks for drawer condition and title of document
   const [open, setOpen] = React.useState(true)
   const [title, setTitle] = React.useState('Dashboard')
 
+  // Handle opening drawer
   const handleDrawerOpen = () => {
     setOpen(true);
   }
 
+  // Handle closing drawer
   const handleDrawerClose = () => {
     setOpen(false);
   }
 
+  // Handle change on title
   const changeTitle = newTitle => {
     setTitle(newTitle)
   }
 
+  // Render interface
   return (
     <div className={ classes.root }>
       <CssBaseline />
@@ -44,7 +53,7 @@ const App = () => {
         handleDrawerOpen={ handleDrawerOpen }
         title={ title }
       />
-      <Router histpry={browserHistory}>
+      <Router history={browserHistory}>
         <AppDrawer
           classes={ classes }
           open={ open }
@@ -52,7 +61,7 @@ const App = () => {
           theme={ theme }
           changeTitle={ changeTitle }
         />
-        <Container maxWidth='lg'>
+        <Container maxWidth='xl'>
         <main
           className={clsx(classes.content, {
             [ classes.contentShift ]: open,

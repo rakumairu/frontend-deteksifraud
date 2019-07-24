@@ -26,69 +26,8 @@ class Recap extends React.Component {
 
   componentDidMount() {
     document.title = 'Recap | RPP'
-
     this._isMounted = true
-
-    fetch(address, { signal: this.abortController.signal })
-    // Check if reponse is ok
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw new Error('Something went wrong')
-      }
-    })
-    .then(response => {
-      // Compare new and current data
-      if (response !== this.state.data) {
-        // Create header configuration for table columns
-        const originalHeader = Object.keys(response[0])
-        const classHeader = 'status'
-        const timestampHeader = 'timestamp'
-        /*
-          Disabled features
-        */
-        // const classHeader = localStorage.getItem('classColumn')
-        // const timestampHeader = localStorage.getItem('timestampColumn')
-        
-        const column = originalHeader.map((head) => {
-          if (head === timestampHeader) {
-            return {
-                title: head,
-                field: head,
-                defaultSort: 'desc',
-                type: 'datetime'
-              }
-          } else {
-            return {
-              title: head,
-              field: head
-            }
-          }
-        })
-        
-        let amount = response.filter(row => row[classHeader] === 1).length
-        let percentage = (amount / response.length) * 100
-        let normalAmount = response.length - amount
-        let normalPercentage = (normalAmount / response.length) * 100
-
-        let newState = {
-          data: response.filter(row => row[classHeader] === 1),
-          fullData: response.filter(row => row[classHeader] === 1),
-          column: column,
-          isLoading: false,
-          anomalyTotal: amount,
-          anomalyPercentage: percentage.toFixed(2),
-          normalTotal: normalAmount,
-          normalPercentage: normalPercentage.toFixed(2)
-        }
-
-        this.setState(newState)
-      }
-    })
-    .catch(e => {
-      console.log(e)
-    })
+    this.fetchData()
   }
 
   componentWillUnmount() {
@@ -160,6 +99,83 @@ class Recap extends React.Component {
 
     this.setState({
       data: filtered
+    })
+  }
+
+  fetchData = () => {
+    fetch(address, { signal: this.abortController.signal })
+    // Check if reponse is ok
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error('Something went wrong')
+      }
+    })
+    .then(response => {
+      // Compare new and current data
+      if (response !== this.state.data) {
+        // Create header configuration for table columns
+        const originalHeader = Object.keys(response[0])
+        const classHeader = 'status'
+        const timestampHeader = 'timestamp'
+        /*
+          Disabled features
+        */
+        // const classHeader = localStorage.getItem('classColumn')
+        // const timestampHeader = localStorage.getItem('timestampColumn')
+        
+        const column = originalHeader.map((head) => {
+          if (head === timestampHeader) {
+            return {
+                title: head,
+                field: head,
+                defaultSort: 'desc',
+                type: 'datetime'
+              }
+          } else {
+            return {
+              title: head,
+              field: head
+            }
+          }
+        })
+        
+        let amount = response.filter(row => row[classHeader] === 1).length
+        let percentage = (amount / response.length) * 100
+        let normalAmount = response.length - amount
+        let normalPercentage = (normalAmount / response.length) * 100
+
+        let newState = {
+          data: response.filter(row => row[classHeader] === 1),
+          fullData: response.filter(row => row[classHeader] === 1),
+          column: column,
+          isLoading: false,
+          anomalyTotal: amount,
+          anomalyPercentage: percentage.toFixed(2),
+          normalTotal: normalAmount,
+          normalPercentage: normalPercentage.toFixed(2)
+        }
+
+        this.setState(newState)
+
+        this.setState({
+          snackMessage: 'Succesfully fetch data',
+          snackVariant: 'success'
+        })
+
+        this.setState({
+          snackMessage: '',
+          snackVariant: ''
+        })
+      }
+    })
+    .catch(e => {
+      console.log(e)
+      this.setState({
+        snackMessage: 'Something went wrong',
+        snackVariant: 'error'
+      })
     })
   }
 

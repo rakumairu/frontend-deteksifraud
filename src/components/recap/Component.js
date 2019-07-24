@@ -9,6 +9,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Tabel from '../elements/tabel/Tabel'
 import DatePick from '../elements/datepicker/DatePick'
 import LineChartRC from '../elements/linechart/LineChartRC'
+import SnackNotification from '../elements/snackbars/SnackNotification'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,6 +26,10 @@ const Component = props => {
   const classes = useStyles()
   return (
     <div className={ classes.root }>
+      <SnackNotification
+        message={ props.snackMessage }
+        variant={ props.snackVariant }
+      />
       <Grid
         container
         spacing={ 3 }

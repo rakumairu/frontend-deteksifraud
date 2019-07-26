@@ -12,8 +12,8 @@ export default () => {
     let data = JSON.parse(message)
 
     // Set class and timestamp column name
-    const classHeader = 'status'
-    const timestampHeader = 'timestamp'
+    const classHeader = 'Detect'
+    const timestampHeader = 'Timestamps'
 
     // Prepare for the new state
     let oldData = state.data

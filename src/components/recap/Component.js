@@ -35,48 +35,34 @@ const Component = props => {
         spacing={ 3 }
       >
         <Grid item xs={ 12 }>
-          <Grid
-            container
+          <DatePick
+            value={ props.startDate }
+            changeDate= { props.changeStartDate }
+            id='start-date'
+            label='Start Date'
+            disableFuture={ false }
+          />
+          <DatePick
+            value={ props.endDate }
+            changeDate= { props.changeEndDate }
+            id='end-date'
+            label='End Date'
+            disableFuture={ true }
+          />
+          <ButtonGroup 
+            color="primary" 
+            size='large' 
+            aria-label="Outlined primary button group" 
             style={{
-              justifyContent: 'space-between'
+              float: 'right'
             }}
           >
-            <div>
-              <DatePick
-                value={ props.startDate }
-                changeDate= { props.changeStartDate }
-                id='start-date'
-                label='Start Date'
-                disableFuture={ false }
-              />
-              <DatePick
-                value={ props.endDate }
-                changeDate= { props.changeEndDate }
-                id='end-date'
-                label='End Date'
-                disableFuture={ true }
-              />
-            </div>
-            <ButtonGroup 
-              color="primary" 
-              size='large' 
-              aria-label="Outlined primary button group" 
-              style={{
-                justifyContent: 'flex-end'
-              }}
-            >
-              <Button onClick={ props.changeRange.bind(props, 'week') }>1 Week</Button>
-              <Button onClick={ props.changeRange.bind(props, 'month') }>1 Month</Button>
-              <Button onClick={ props.changeRange.bind(props, 'year') }>1 Year</Button>
-              <Button onClick={ props.changeRange.bind(props, 'all') }>All</Button>
-            </ButtonGroup>
-          </Grid>
+            <Button onClick={ props.changeRange.bind(props, 'week') }>1 Week</Button>
+            <Button onClick={ props.changeRange.bind(props, 'month') }>1 Month</Button>
+            <Button onClick={ props.changeRange.bind(props, 'year') }>1 Year</Button>
+            <Button onClick={ props.changeRange.bind(props, 'all') }>All</Button>
+          </ButtonGroup>
         </Grid>
-      </Grid>
-      <Grid
-        container
-        spacing={3}
-      >
         <Grid item xs={12}>
           <Tabel
             data={ props.data }
@@ -85,11 +71,6 @@ const Component = props => {
             title={ 'Fraud Recap' }
           />
         </Grid>
-      </Grid>
-      <Grid
-        container
-        spacing={3}
-      >
         <Grid item xs={12}>
           <LineChartRC
             data={ props.data }

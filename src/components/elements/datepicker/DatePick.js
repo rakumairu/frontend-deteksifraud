@@ -13,7 +13,6 @@ export default function DatePick(props) {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <DatePicker
         autoOk
-        clearable
         variant='inline'
         id={ props.id }
         label={ props.label }

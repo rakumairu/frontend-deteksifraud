@@ -33,7 +33,7 @@ const LineChartRC = props => {
 			
 			return {
 				...row,
-				timestamp: dateString
+				[timestamp]: dateString
 			}
     })
 
@@ -67,7 +67,7 @@ const LineChartRC = props => {
   )
 
   // Initialize prepared data
-  let data = prepareData(props.data, 'timestamp')
+  let data = prepareData(props.data, 'Timestamps')
 
   return (
     <div>

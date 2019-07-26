@@ -9,7 +9,7 @@ import Component from './Component'
 class Recap extends React.Component {
 
   // Server address
-  address = 'http://localhost:8000/api/dummy_labelled/'
+  address = 'http://rpp-backend.herokuapp.com/ulb/api/labeled-list/'
 
   // Abortcontroller to abort asynchronous task
   abortController = new AbortController()
@@ -152,8 +152,8 @@ class Recap extends React.Component {
       if (response !== this.state.data) {
         // Create header configuration for table columns
         const originalHeader = Object.keys(response[0])
-        const classHeader = 'status'
-        const timestampHeader = 'timestamp'
+        const classHeader = 'Detect'
+        const timestampHeader = 'Timestamps'
 
         /*
           Disabled features

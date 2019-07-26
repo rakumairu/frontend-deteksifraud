@@ -42,7 +42,7 @@ const Tabel = props => {
 
 			return {
 				...row,
-				timestamp: dateString
+				[timestamp]: dateString
 			}
     })
 
@@ -50,7 +50,7 @@ const Tabel = props => {
   }
 
   // Initialize prepared data
-  let data = prepareData(props.data, 'timestamp')
+  let data = prepareData(props.data, 'Timestamps')
 
   return (
     ( props.isLoading ?
@@ -61,7 +61,7 @@ const Tabel = props => {
         data={ data }
         options={{
           rowStyle: rowData => {
-            const h = localStorage.getItem('timestampColumn')
+            const h = 'Detect'
             return (rowData[h] === 0 ? normalStyles : anomalyStyles)
           }
         }}

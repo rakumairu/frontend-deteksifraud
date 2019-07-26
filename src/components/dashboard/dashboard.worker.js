@@ -2,8 +2,6 @@ export default () => {
   self.addEventListener('message', e => { // eslint-disable-line no-restricted-globals
     if (!e) return
 
-    console.log(e.data)
-
     // Get message and state
     const message = e.data.message
     const state = e.data.state

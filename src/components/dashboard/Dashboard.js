@@ -28,7 +28,6 @@ class Dashboard extends React.Component {
     // Initialize state
     this.state = {
       data: [],
-      column: null,
       anomalyTotal: 0,
       anomalyPercentage: 0,
       totalData: 0,
@@ -69,20 +68,13 @@ class Dashboard extends React.Component {
 
     // Event listener for worker
     this.worker.addEventListener('message', (event) => {
-      const newState = event.data
-      this.setState(newState)
-      this.setState({
-        snackMessage: '',
-        snackVariant: ''
-      })
-      localStorage.setItem('oldState', JSON.stringify(newState))
+      this.handleMessage(event)
     })
 
     // Handle new message
     this.emitter.on('new-message', (message) => {
       this.worker.postMessage({
         message: message.data,
-        state: this.state
       })
     })
   }
@@ -95,6 +87,49 @@ class Dashboard extends React.Component {
     this.rws.addEventListener('close', () => {
       this.rws.close(1000)
     })
+  }
+
+  handleMessage = event => {
+    // Get message from the event
+    const message = event.data
+
+    // Turn off isLoading state
+    if (this.state.isLoading) {
+      this.setState({
+        isLoading: false
+      })
+    }
+
+    // Check is it a fraud transaction or not, and only update if component is mounted
+    if (message.fraud && this._isMounted) {
+      // Change the state value
+      this.setState(prevState => ({
+        data: [...prevState.data, message.data],
+        anomalyTotal: prevState.anomalyTotal + 1,
+        totalData: prevState.totalData + 1,
+        anomalyPercentage: (((prevState.anomalyTotal + 1) / (prevState.totalData + 1)) * 100).toFixed(4),
+        snackMessage: 'New Fraud Transaction Detected',
+        snackVariant: 'error',
+      }), () => {
+        // Reset snackmessage
+        this.setState({
+          snackMessage: '',
+          snackVariant: '',
+        }, () => {
+          // Save state to localstorage
+          localStorage.setItem('oldState', JSON.stringify(this.state))
+        })
+      })
+    } else if (this._isMounted) {
+      // Change the state value
+      this.setState(prevState => ({
+        totalData: prevState.totalData + 1,
+        anomalyPercentage: (((prevState.anomalyTotal) / (prevState.totalData + 1)) * 100).toFixed(4),
+      }), () => {
+        // Save state to localstorage
+        localStorage.setItem('oldState', JSON.stringify(this.state))
+      })
+    }
   }
 
   render() {

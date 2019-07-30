@@ -1,77 +1,63 @@
 // Import React
 import React from 'react'
-import { Router } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
-import clsx from 'clsx'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 // Import Material-UI
-import { useTheme } from '@material-ui/core/styles'
+import { createMuiTheme, MuiThemeProvider, responsiveFontSizes } from '@material-ui/core/styles'
+import { SnackbarProvider } from 'notistack'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 
 // Import Components
 import Routes from './routes/Routes'
 import NavBar from './navbar/NavBar'
-import AppDrawer from './appdrawer/AppDrawer'
 
 import useStyles from './Styles'
 
 
 // Handle app overall
 const App = () => {
-  // Browser history for router
-  const browserHistory = createBrowserHistory()
+  // Initialize theme for the app
+  let theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: '#474b52',
+        main: '#20232a',
+        dark: '#000000',
+        contrastText: '#ffffff',
+      },
+      secondary: {
+        light: '#9affff',
+        main: '#61dafb',
+        dark: '#10a8c8',
+        contrastText: '#000000',
+      },
+    },
+  })
+  
+  // Use responsive font size for the theme
+  theme = responsiveFontSizes(theme)
+  
   // Use styles and themes
-  const classes = useStyles()
-  const theme = useTheme()
-  // Hooks for drawer condition and title of document
-  const [open, setOpen] = React.useState(true)
-  const [title, setTitle] = React.useState('Dashboard')
-
-  // Handle opening drawer
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  }
-
-  // Handle closing drawer
-  const handleDrawerClose = () => {
-    setOpen(false);
-  }
-
-  // Handle change on title
-  const changeTitle = newTitle => {
-    setTitle(newTitle)
-  }
+  const classes = useStyles(theme)
 
   // Render interface
   return (
     <div className={ classes.root }>
-      <CssBaseline />
-      <NavBar
-        classes={ classes }
-        open={ open }
-        handleDrawerOpen={ handleDrawerOpen }
-        title={ title }
-      />
-      <Router history={browserHistory}>
-        <AppDrawer
-          classes={ classes }
-          open={ open }
-          handleDrawerClose={ handleDrawerClose }
-          theme={ theme }
-          changeTitle={ changeTitle }
-        />
-        <Container maxWidth='md'>
-        <main
-          className={clsx(classes.content, {
-            [ classes.contentShift ]: open,
-          })}
-        >
-          <div className={ classes.drawerHeader } />
-          <Routes />
-        </main>
-        </Container>
-      </Router>
+      <MuiThemeProvider theme={ theme }>
+        <SnackbarProvider maxSnack={3}>
+          <CssBaseline />
+          <Router>
+              <Container maxWidth='lg'>
+                <NavBar
+                  classes={ classes }
+                />
+                <div className={ classes.drawerHeader } />
+                <Routes/>
+              </Container>
+          </Router>
+        </SnackbarProvider>
+      </MuiThemeProvider>
     </div>
   )
 }

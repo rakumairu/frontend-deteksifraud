@@ -8,9 +8,13 @@ import {
 
 // Import material-ui component
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 // Import component
 import CircularIndeterminate from '../progress/CircularProgress'
+
+// Import styles
+import useStyles from '../../app/Styles'
 
 
 // Display line chart
@@ -69,11 +73,16 @@ const LineChartRC = props => {
   // Initialize prepared data
   let data = prepareData(props.data, 'Timestamps')
 
+  const classes = useStyles()
+
   return (
     <div>
     { props.isLoading ?
       <CircularIndeterminate minHeight={'416px'} /> :
-      <Paper>
+      <Paper className={ classes.lineChart }>
+        <Typography variant="h5" component="h3" style={ {textAlign: 'center'} }>
+          Line Chart
+        </Typography>
         <ResponsiveContainer width='100%' height={300}>
           <LineChart
             data={data}

@@ -9,7 +9,7 @@ import Component from './Component'
 class Recap extends React.Component {
 
   // Server address
-  address = 'http://rpp-backend.herokuapp.com/ulb/api/labeled-list/'
+  address = 'http://rpp-backend.herokuapp.com/ulb/api/labeled-list/fraud/'
 
   // Abortcontroller to abort asynchronous task
   abortController = new AbortController()
@@ -105,14 +105,20 @@ class Recap extends React.Component {
 
   // Filter the data based on startdate and enddate
   filterData = (start, end) => {
+    // Set time of end date to last hoaurs
+    end.setHours(23,59,59,999)
+    
     // Initialize new filtered data
     let filtered = []
 
     // Check if startdate is exist
     if (start !== null) {
+      // Set time of start date to beginning hours
+      start.setHours(0,0,0,0)
+      
       // Generate filtered data
       filtered = this.state.fullData.filter(row => {
-        let timestamp = new Date(row['timestamp'])
+        let timestamp = new Date(row['Timestamps'])
         if (timestamp.getTime() >= start.getTime() && timestamp <= end.getTime()) {
           return true
         }
@@ -121,7 +127,7 @@ class Recap extends React.Component {
     } else {
       // Generate filtered data
       filtered = this.state.fullData.filter(row => {
-        let timestamp = new Date(row['timestamp'])
+        let timestamp = new Date(row['Timestamps'])
         if (timestamp <= end.getTime()) {
           return true
         }
@@ -154,12 +160,6 @@ class Recap extends React.Component {
         const originalHeader = Object.keys(response[0])
         const classHeader = 'Detect'
         const timestampHeader = 'Timestamps'
-
-        /*
-          Disabled features
-        */
-        // const classHeader = localStorage.getItem('classColumn')
-        // const timestampHeader = localStorage.getItem('timestampColumn')
 
         // Generate new column data
         const column = originalHeader.map((head) => {
@@ -214,12 +214,15 @@ class Recap extends React.Component {
       }
     })
     .catch(e => {
-      console.log(e)
-
       // Trigger notification on error
       this.setState({
         snackMessage: 'Something went wrong',
         snackVariant: 'warning'
+      })
+
+      this.setState({
+        snackMessage: '',
+        snackVariant: ''
       })
     })
   }

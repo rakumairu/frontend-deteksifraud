@@ -1,21 +1,20 @@
 // Import React
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 // Import Material-UI
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 import Assessment from '@material-ui/icons/Assessment'
 import Dashboard from '@material-ui/icons/Dashboard'
+import Button from '@material-ui/core/Button';
 
 
 // Handle data for drawer
-class Header extends React.Component {
+const Header2 = (props) => {
+  // Hooks handle selected component
+  const [selected, setSelected] = useState('')
 
   // List of all route and its name and link
-  route = [
+  const route = [
   {
       name: 'Dashboard',
       link: '/',
@@ -28,73 +27,46 @@ class Header extends React.Component {
     }
   ]
 
-  // Class constructor
-  constructor() {
-    super()
-
-    // Initialize state
-    this.state = {
-      selected: ''
-    }
-  }
-
   // Handle when component mounted
-  componentDidMount() {
-    // Get current pathname
-    let current = this.props.location.pathname
-
-    // Change document title
-    this.props.changeTitle(this.convertName(current, this.route))
-
-    // Save current pathname to state
-    this.setState({
-      selected: current
-    })
-  }
-
-  // Convert pathname(link) to it's name
-  convertName = (value, array) => {
-    // Iterate on route array
-    for (let i=0; i < array.length; i++) {
-      // Check if the value is match
-      if (array[i].link === value) {
-        return array[i].name
-      }
+  useEffect(() => {
+    // Handle change of pathname
+    const changeSelected = value => {
+      setSelected(value)
     }
-  }
+
+    // Get current pathname
+    let current = props.location.pathname
+
+    // Check if current pathname is the same as selected
+    if (current !== selected) {
+      changeSelected(current)
+    }
+  })
 
   // Handle navigate to new route
-  navigate = (value) => {
+  const navigate = (value) => {
     // Push link to history
-    this.props.history.push(value.link)
-
-    // Change title of the document
-    this.props.changeTitle(value.name)
+    props.history.push(value.link)
 
     // Save current selected link
-    this.setState({
-      selected: value.link
-    })
+    setSelected(value.link)
   }
 
-  render() {
-    return (
-      <List>
-        {this.route.map(value => (
-          <ListItem
-            button 
-            key={value.name} 
-            onClick={this.navigate.bind(this, value)} 
-            selected={this.state.selected === value.link}
-          >
-            <ListItemIcon>{value.icon}</ListItemIcon>
-            <ListItemText primary={value.name} />
-          </ListItem>
-        ))}
-      </List>
-    )
-  }
+  return (
+    <span style={ {flexGrow: 15} }>
+      {route.map(value => (
+        <Button 
+          key={ value.name } 
+          onClick={ navigate.bind(this, value) } 
+          color='inherit'
+          style={ {marginRight: '12px'} }
+        >
+          { value.name }
+        </Button>
+      ))}
+    </span>
+  )
 }
 
 
-export default withRouter(Header)
+export default withRouter(Header2)

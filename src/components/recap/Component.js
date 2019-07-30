@@ -1,31 +1,22 @@
+// Import react
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
+// Import material ui components
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-
+// Import Components
 import Tabel from '../elements/tabel/Tabel'
 import DatePick from '../elements/datepicker/DatePick'
 import LineChartRC from '../elements/linechart/LineChartRC'
 import SnackNotification from '../elements/snackbars/SnackNotification'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}))
 
+// Dumb component for recap
 const Component = props => {
-  const classes = useStyles()
   return (
-    <div className={ classes.root }>
+    <div>
       <SnackNotification
         message={ props.snackMessage }
         variant={ props.snackVariant }
@@ -50,7 +41,7 @@ const Component = props => {
             disableFuture={ true }
           />
           <ButtonGroup 
-            color="primary" 
+            color="default" 
             size='large' 
             aria-label="Outlined primary button group" 
             style={{
@@ -66,7 +57,6 @@ const Component = props => {
         <Grid item xs={12}>
           <Tabel
             data={ props.data }
-            column={ props.column }
             isLoading={ props.isLoading }
             title={ 'Fraud Recap' }
           />

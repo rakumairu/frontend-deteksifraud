@@ -4,12 +4,11 @@ import React from 'react'
 // Import view component
 import Component from './Component'
 
+import { restAddress } from '../../assets/js/constant'
+
 
 // Display recap data from Rest API
 class Recap extends React.Component {
-
-  // Server address
-  address = 'http://rpp-backend.herokuapp.com/ulb/api/labeled-list/fraud/'
 
   // Abortcontroller to abort asynchronous task
   abortController = new AbortController()
@@ -143,8 +142,8 @@ class Recap extends React.Component {
 
   // Handle fetch data from Rest API
   fetchData = () => {
-    // Fetch to Rest API address with abort signal
-    fetch(this.address, { signal: this.abortController.signal })
+    // Fetch to Rest API restAddress with abort signal
+    fetch(restAddress, { signal: this.abortController.signal })
     // Check if reponse is ok
     .then(response => {
       if (response.ok) {

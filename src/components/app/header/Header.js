@@ -3,29 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 // Import Material-UI
-import Assessment from '@material-ui/icons/Assessment'
-import Dashboard from '@material-ui/icons/Dashboard'
 import Button from '@material-ui/core/Button';
+
+// Import Constant Value
+import { route } from '../../../assets/js/constant'
 
 
 // Handle data for drawer
 const Header2 = (props) => {
   // Hooks handle selected component
   const [selected, setSelected] = useState('')
-
-  // List of all route and its name and link
-  const route = [
-  {
-      name: 'Dashboard',
-      link: '/',
-      icon: <Dashboard />
-    },
-    {
-      name: 'Recap',
-      link: '/recap',
-      icon: <Assessment />
-    }
-  ]
 
   // Handle when component mounted
   useEffect(() => {

@@ -3,8 +3,6 @@ import React from 'react'
 
 // Import material-ui components
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
 
 // Import styles
 import useStyles from '../../app/Styles'
@@ -17,28 +15,22 @@ function CircularIndeterminate(props) {
   const classes = useStyles()
 
   return (
-    <Paper>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: props.minHeight }}
-      >
-        <Grid item xs={3}>
-          <CircularProgress
-            className={classes.progress}
-            size={40}
-            left={-20}
-            top={10}
-            status={'loading'}
-            style={{marginLeft: '20%'}}
-          />
-          <p>Loading...</p>
-        </Grid>
-      </Grid>
-    </Paper>
+    <span style={ {
+      display: 'flex',
+      alignSelf: 'center',
+      flexGrow: 1,
+      justifyContent: 'center',
+      flexDirection: 'column',
+      marginTop: '12%'
+    } }>
+      <CircularProgress
+        className={classes.progress}
+        size={40}
+        status={'loading'}
+        style={ {alignSelf: 'center'} }
+      />
+      <p style={ {alignSelf: 'center'} }>Loading...</p>
+    </span>
   )
 }
 

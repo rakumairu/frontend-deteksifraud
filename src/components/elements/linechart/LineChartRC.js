@@ -10,9 +10,6 @@ import {
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
-// Import component
-import CircularIndeterminate from '../progress/CircularProgress'
-
 // Import styles
 import useStyles from '../../app/Styles'
 
@@ -76,31 +73,26 @@ const LineChartRC = props => {
   const classes = useStyles()
 
   return (
-    <div>
-    { props.isLoading ?
-      <CircularIndeterminate minHeight={'416px'} /> :
-      <Paper className={ classes.lineChart }>
-        <Typography variant="h5" component="h3" style={ {textAlign: 'center'} }>
-          Line Chart
-        </Typography>
-        <ResponsiveContainer width='100%' height={300}>
-          <LineChart
-            data={data}
-            margin={{
-              top: 30, right: 60, left: 20, bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="transactions" stroke="#8884d8" activeDot={{ r: 8 }} />
-          </LineChart>
-        </ResponsiveContainer>
-      </Paper>
-    }
-    </div>
+    <Paper className={ classes.lineChart }>
+      <Typography variant="h5" component="h3" style={ {textAlign: 'center'} }>
+        Line Chart
+      </Typography>
+      <ResponsiveContainer width='100%' height={300}>
+        <LineChart
+          data={data}
+          margin={{
+            top: 30, right: 60, left: 20, bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="transactions" stroke="#8884d8" activeDot={{ r: 8 }} />
+        </LineChart>
+      </ResponsiveContainer>
+    </Paper>
   )
 }
 

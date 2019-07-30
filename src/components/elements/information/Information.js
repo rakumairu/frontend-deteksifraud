@@ -13,9 +13,6 @@ import Divider from '@material-ui/core/Divider'
 // Import Styles
 import useStyles from '../../app/Styles'
 
-// Import component
-import CircularIndeterminate from '../progress/CircularProgress'
-
 
 // Information component, displaying come information
 const Information = props => {
@@ -37,24 +34,19 @@ const Information = props => {
    )
 
   return (
-    <div style={ {height: '100%'} }>
-      { props.isLoading ?
-        <CircularIndeterminate minHeight={'416px'} /> :
-        <Tooltip title={props.tooltip}>
-          <Card className={classes.card}>
-            <CardHeader
-              avatar={ <Info /> }
-              title="Fraud Transactions"
-              subheader="General Information"
-            />
-            <Divider />
-            <CardContent>
-              { content }
-            </CardContent>
-          </Card>
-        </Tooltip>
-      }
-    </div>
+    <Tooltip title={props.tooltip}>
+      <Card className={classes.card}>
+        <CardHeader
+          avatar={ <Info /> }
+          title="Fraud Transactions"
+          subheader="General Information"
+        />
+        <Divider />
+        <CardContent>
+          { content }
+        </CardContent>
+      </Card>
+    </Tooltip>
   )
 }
 

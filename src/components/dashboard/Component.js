@@ -9,10 +9,52 @@ import Tabel from '../elements/tabel/Tabel'
 import Information from '../elements/information/Information'
 import SnackNotification from '../elements/snackbars/SnackNotification'
 import LineChartRC from '../elements/linechart/LineChartRC'
+import CircularIndeterminate from '../elements/progress/CircularProgress'
 
 
 // Dumb component for dashboard.js
 const Component = props => {
+
+  let content = (
+    props.isLoading ?
+    <CircularIndeterminate minHeight={'416px'} /> :
+    <>
+      <Grid item xs={9} >
+        <Tabel
+          data={ props.data }
+          isLoading={ props.isLoading }
+          title= { 'Fraud Streaming' }
+        />
+      </Grid>
+      <Grid item xs={3} >
+        <Information
+          content={ [
+            {
+              title: 'Detected Fraud Transactions',
+              data: props.anomalyTotal
+            },
+            {
+              title: 'Percentage',
+              data: props.anomalyPercentage + '%'
+            },
+            {
+              title: 'Total Transactions',
+              data: props.totalData
+            }
+          ] }
+          tooltip={ 'General Information of Fraud Transaction' }
+          isLoading={ props.isLoading }
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <LineChartRC
+          data={ props.data }
+          isLoading={ props.isLoading }
+          title={ 'Fraud Line Chart' }
+        />
+      </Grid>
+    </>
+  )
 
   return (
     <div>
@@ -24,45 +66,7 @@ const Component = props => {
         container
         spacing={3}
       >
-        <Grid item xs={9} >
-          <Tabel
-            data={ props.data }
-            isLoading={ props.isLoading }
-            title= { 'Fraud Streaming' }
-          />
-        </Grid>
-        <Grid item xs={3} >
-          <Information
-            content={ [
-              {
-                title: 'Detected Fraud Transactions',
-                data: props.anomalyTotal
-              },
-              {
-                title: 'Percentage',
-                data: props.anomalyPercentage + '%'
-              },
-              {
-                title: 'Total Transactions',
-                data: props.totalData
-              }
-            ] }
-            tooltip={ 'General Information of Fraud Transaction' }
-            isLoading={ props.isLoading }
-          />
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        spacing={3}
-      >
-        <Grid item xs={12}>
-          <LineChartRC
-            data={ props.data }
-            isLoading={ props.isLoading }
-            title={ 'Fraud Line Chart' }
-          />
-        </Grid>
+        { content }
       </Grid>
     </div>
   )

@@ -12,12 +12,11 @@ import Component from './Component'
 import WebWorker from '../../webWorker'
 import worker from './dashboard.worker'
 
+import { wsAddress } from '../../assets/js/constant'
+
 
 // Display dashboard on realtime fraud detection
 class Dashboard extends React.Component {
-
-  // Server name
-  server = 'wss://rpp-backend.herokuapp.com/ulb/predict/'
 
   // Event emitter
   emitter = ee({})
@@ -37,7 +36,7 @@ class Dashboard extends React.Component {
     }
 
     // Create ReconnectingWebsocket
-    this.rws = new ReconnectingWebSocket(this.server)
+    this.rws = new ReconnectingWebSocket(wsAddress)
   }
 
   componentDidMount() {
@@ -50,7 +49,9 @@ class Dashboard extends React.Component {
     // Get oldstate from localstorage
     let oldState = localStorage.getItem('oldState')
     if (oldState !== null) {
-      this.setState(JSON.parse(oldState))
+      this.setState(JSON.parse(oldState), () => {
+        this.setState({isLoading: false})
+      })
     }
 
     // Add onopen event listener on websoket

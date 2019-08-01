@@ -18,10 +18,10 @@ export const route = [
 ]
 
 // Websocket address for data streaming in dashboard
-export const wsAddress = 'wss://rpp-backend.herokuapp.com/ulb/predict/'
+export const wsAddress = 'wss://backend-deteksifraud.herokuapp.com/ulb/predict/'
 
 // Rest API address for fetching data in recap
-export const restAddress = 'http://rpp-backend.herokuapp.com/ulb/api/labeled-list/fraud/'
+export const restAddress = 'http://backend-deteksifraud.herokuapp.com/ulb/api/labeled-list/fraud/'
 
 // List of columns that will be used
 export const tableColumns = [

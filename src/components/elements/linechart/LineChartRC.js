@@ -23,13 +23,16 @@ const LineChartRC = props => {
     const options = {
       year: 'numeric',
       month: '2-digit',
-      day: '2-digit'
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
     }
 
     // Generate modified data
 		let modified = data.map(row => {
-			let date = new Date(row[timestamp])
-      date.setHours(0,0,0,0)
+      let date = new Date(row[timestamp])
+      date.setHours(date.getHours(),0,0,0)
       const dateString = date.toLocaleDateString('en-GB', options)
 			
 			return {
